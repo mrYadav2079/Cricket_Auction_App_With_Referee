@@ -7,31 +7,31 @@
   "availablePlayers": {
     "Batsmen": [
       {
-        "name": "Amit Singh",
+        "name": "Pulkit Prakash",
         "basePrice": 2
       },
       {
-        "name": "Amit RLI",
+        "name": "Amit-RLI",
         "basePrice": 2
       },
       {
-        "name": "Govind",
+        "name": "Milind Raj",
         "basePrice": 2
       },
       {
-        "name": "Manjit",
+        "name": "Deepak Raj",
         "basePrice": 2
       },
       {
-        "name": "Prabhat",
+        "name": "Rajan Yadav",
         "basePrice": 2
       },
       {
-        "name": "Prakash",
+        "name": "Sanjay Yadav",
         "basePrice": 2
       },
       {
-        "name": "Rajan",
+        "name": "Shivam Tyagi",
         "basePrice": 2
       }
     ],
@@ -41,7 +41,33 @@
         "basePrice": 2
       },
       {
-        "name": "Shivam Kumar",
+        "name": "SSY",
+        "basePrice": 2
+      },
+      {
+        "name": "Bhaskar Rajput",
+        "basePrice": 2
+      },
+      {
+        "name": "Saurabh Bist",
+        "basePrice": 2
+      },
+      {
+        "name": "Rakesh Jha",
+        "basePrice": 2
+      },
+      {
+        "name": "Kundan Saw",
+        "basePrice": 2
+      }
+    ],
+    "Allrounders": [
+      {
+        "name": "Govind  Dubey",
+        "basePrice": 2
+      },
+      {
+        "name": "Amit Singh",
         "basePrice": 2
       },
       {
@@ -49,41 +75,19 @@
         "basePrice": 2
       },
       {
-        "name": "SSY",
+        "name": "Jai Gupta",
         "basePrice": 2
       },
       {
-        "name": "Pulkit Prakash",
+        "name": "Prakash Singh",
         "basePrice": 2
       },
       {
-        "name": "Saurabh Bist",
-        "basePrice": 2
-      }
-    ],
-    "Allrounders": [
-      {
-        "name": "Hardik Pandya",
+        "name": "Shivam Kumar",
         "basePrice": 2
       },
       {
-        "name": "Ravindra Jadeja",
-        "basePrice": 2
-      },
-      {
-        "name": "Washington Sundar",
-        "basePrice": 2
-      },
-      {
-        "name": "Axar Patel",
-        "basePrice": 2
-      },
-      {
-        "name": "Deepak Hooda",
-        "basePrice": 2
-      },
-      {
-        "name": "Krunal Pandya",
+        "name": "Manjit Yadav",
         "basePrice": 2
       }
     ]
@@ -91,31 +95,31 @@
   "defaultPlayers": {
     "Batsmen": [
       {
-        "name": "Amit Singh",
+        "name": "Pulkit Prakash",
         "basePrice": 2
       },
       {
-        "name": "Amit RLI",
+        "name": "Amit-RLI",
         "basePrice": 2
       },
       {
-        "name": "Govind",
+        "name": "Milind Raj",
         "basePrice": 2
       },
       {
-        "name": "Manjit",
+        "name": "Deepak Raj",
         "basePrice": 2
       },
       {
-        "name": "Prabhat",
+        "name": "Rajan Yadav",
         "basePrice": 2
       },
       {
-        "name": "Prakash",
+        "name": "Sanjay Yadav",
         "basePrice": 2
       },
       {
-        "name": "Rajan",
+        "name": "Shivam Tyagi",
         "basePrice": 2
       }
     ],
@@ -125,7 +129,33 @@
         "basePrice": 2
       },
       {
-        "name": "Shivam Kumar",
+        "name": "SSY",
+        "basePrice": 2
+      },
+      {
+        "name": "Bhaskar Rajput",
+        "basePrice": 2
+      },
+      {
+        "name": "Saurabh Bist",
+        "basePrice": 2
+      },
+      {
+        "name": "Rakesh Jha",
+        "basePrice": 2
+      },
+      {
+        "name": "Kundan Saw",
+        "basePrice": 2
+      }
+    ],
+    "Allrounders": [
+      {
+        "name": "Govind  Dubey",
+        "basePrice": 2
+      },
+      {
+        "name": "Amit Singh",
         "basePrice": 2
       },
       {
@@ -133,41 +163,19 @@
         "basePrice": 2
       },
       {
-        "name": "SSY",
+        "name": "Jai Gupta",
         "basePrice": 2
       },
       {
-        "name": "Pulkit Prakash",
+        "name": "Prakash Singh",
         "basePrice": 2
       },
       {
-        "name": "Saurabh Bist",
-        "basePrice": 2
-      }
-    ],
-    "Allrounders": [
-      {
-        "name": "Hardik Pandya",
+        "name": "Shivam Kumar",
         "basePrice": 2
       },
       {
-        "name": "Ravindra Jadeja",
-        "basePrice": 2
-      },
-      {
-        "name": "Washington Sundar",
-        "basePrice": 2
-      },
-      {
-        "name": "Axar Patel",
-        "basePrice": 2
-      },
-      {
-        "name": "Deepak Hooda",
-        "basePrice": 2
-      },
-      {
-        "name": "Krunal Pandya",
+        "name": "Manjit Yadav",
         "basePrice": 2
       }
     ]
