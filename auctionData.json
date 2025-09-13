@@ -1,0 +1,175 @@
+{
+  "teamABudget": 100,
+  "teamBBudget": 100,
+  "teamASquad": [],
+  "teamBSquad": [],
+  "unsoldPlayers": [],
+  "availablePlayers": {
+    "Batsmen": [
+      {
+        "name": "Amit Singh",
+        "basePrice": 2
+      },
+      {
+        "name": "Amit RLI",
+        "basePrice": 2
+      },
+      {
+        "name": "Govind",
+        "basePrice": 2
+      },
+      {
+        "name": "Manjit",
+        "basePrice": 2
+      },
+      {
+        "name": "Prabhat",
+        "basePrice": 2
+      },
+      {
+        "name": "Prakash",
+        "basePrice": 2
+      },
+      {
+        "name": "Rajan",
+        "basePrice": 2
+      }
+    ],
+    "Bowlers": [
+      {
+        "name": "Vishal Yadav",
+        "basePrice": 2
+      },
+      {
+        "name": "Shivam Kumar",
+        "basePrice": 2
+      },
+      {
+        "name": "Ratnesh Divedi",
+        "basePrice": 2
+      },
+      {
+        "name": "SSY",
+        "basePrice": 2
+      },
+      {
+        "name": "Pulkit Prakash",
+        "basePrice": 2
+      },
+      {
+        "name": "Saurabh Bist",
+        "basePrice": 2
+      }
+    ],
+    "Allrounders": [
+      {
+        "name": "Hardik Pandya",
+        "basePrice": 2
+      },
+      {
+        "name": "Ravindra Jadeja",
+        "basePrice": 2
+      },
+      {
+        "name": "Washington Sundar",
+        "basePrice": 2
+      },
+      {
+        "name": "Axar Patel",
+        "basePrice": 2
+      },
+      {
+        "name": "Deepak Hooda",
+        "basePrice": 2
+      },
+      {
+        "name": "Krunal Pandya",
+        "basePrice": 2
+      }
+    ]
+  },
+  "defaultPlayers": {
+    "Batsmen": [
+      {
+        "name": "Amit Singh",
+        "basePrice": 2
+      },
+      {
+        "name": "Amit RLI",
+        "basePrice": 2
+      },
+      {
+        "name": "Govind",
+        "basePrice": 2
+      },
+      {
+        "name": "Manjit",
+        "basePrice": 2
+      },
+      {
+        "name": "Prabhat",
+        "basePrice": 2
+      },
+      {
+        "name": "Prakash",
+        "basePrice": 2
+      },
+      {
+        "name": "Rajan",
+        "basePrice": 2
+      }
+    ],
+    "Bowlers": [
+      {
+        "name": "Vishal Yadav",
+        "basePrice": 2
+      },
+      {
+        "name": "Shivam Kumar",
+        "basePrice": 2
+      },
+      {
+        "name": "Ratnesh Divedi",
+        "basePrice": 2
+      },
+      {
+        "name": "SSY",
+        "basePrice": 2
+      },
+      {
+        "name": "Pulkit Prakash",
+        "basePrice": 2
+      },
+      {
+        "name": "Saurabh Bist",
+        "basePrice": 2
+      }
+    ],
+    "Allrounders": [
+      {
+        "name": "Hardik Pandya",
+        "basePrice": 2
+      },
+      {
+        "name": "Ravindra Jadeja",
+        "basePrice": 2
+      },
+      {
+        "name": "Washington Sundar",
+        "basePrice": 2
+      },
+      {
+        "name": "Axar Patel",
+        "basePrice": 2
+      },
+      {
+        "name": "Deepak Hooda",
+        "basePrice": 2
+      },
+      {
+        "name": "Krunal Pandya",
+        "basePrice": 2
+      }
+    ]
+  }
+}

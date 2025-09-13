@@ -1,0 +1,248 @@
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .wheel {
+            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+        }
+        
+        .bid-animation {
+            animation: bid-bounce 0.5s ease-out;
+        }
+        
+        @keyframes bid-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-border {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4, #10b981);
+            padding: 1px;
+            border-radius: 12px;
+        }
+        
+        .gradient-border-inner {
+            background: #0f0f23;
+            border-radius: 11px;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Enhanced Player Reveal Animations */
+        .player-reveal-card {
+            animation: cardReveal 1s ease-out;
+        }
+        
+        @keyframes cardReveal {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8) rotateY(-15deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+        
+        .player-image-container {
+            animation: imageReveal 1.5s ease-out;
+            position: relative;
+        }
+        
+        @keyframes imageReveal {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5) rotate(-180deg);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1) rotate(-90deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .player-image-reveal {
+            animation: imageZoomIn 1s ease-out 0.5s both;
+        }
+        
+        @keyframes imageZoomIn {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.3);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+        
+        .player-name-reveal {
+            animation: nameTypewriter 2s ease-out 1s both;
+        }
+        
+        @keyframes nameTypewriter {
+            0% { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Rotating rings */
+        .animate-spin-slow {
+            animation: spin-slow 8s linear infinite;
+        }
+        
+        .animate-spin-reverse {
+            animation: spin-reverse 6s linear infinite;
+        }
+        
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        
+        /* Sparkle effect */
+        .sparkle-effect {
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+                radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            animation: particleFloat 4s ease-in-out infinite;
+        }
+        
+        .particle-1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .particle-2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+        
+        .particle-3 {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+        
+        .particle-4 {
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(0px) scale(0.8);
+                opacity: 0.6;
+            }
+            25% { 
+                transform: translateY(-20px) scale(1.2);
+                opacity: 1;
+            }
+            50% { 
+                transform: translateY(-10px) scale(1);
+                opacity: 0.8;
+            }
+            75% { 
+                transform: translateY(-30px) scale(1.1);
+                opacity: 0.9;
+            }
+        }
+        
+        /* Enhanced border gradients */
+        .border-gradient-to-r {
+            border-image: linear-gradient(to right, var(--tw-gradient-stops)) 1;
+        }
+        
+        /* Player fallback enhanced */
+        .player-fallback {
+            animation: fallbackPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes fallbackPulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: brightness(1.2);
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+        }

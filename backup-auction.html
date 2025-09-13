@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cricket Auction App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        * {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .wheel {
+            transition: transform 3s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        
+        .pulse-glow {
+            animation: pulse-glow 2s infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(139, 92, 246, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(139, 92, 246, 0.6); }
+        }
+        
+        .bid-animation {
+            animation: bid-bounce 0.5s ease-out;
+        }
+        
+        @keyframes bid-bounce {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .gradient-border {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4, #10b981);
+            padding: 1px;
+            border-radius: 12px;
+        }
+        
+        .gradient-border-inner {
+            background: #0f0f23;
+            border-radius: 11px;
+        }
+        
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.3);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* Enhanced Player Reveal Animations */
+        .player-reveal-card {
+            animation: cardReveal 1s ease-out;
+        }
+        
+        @keyframes cardReveal {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.8) rotateY(-15deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotateY(0deg);
+            }
+        }
+        
+        .player-image-container {
+            animation: imageReveal 1.5s ease-out;
+            position: relative;
+        }
+        
+        @keyframes imageReveal {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.5) rotate(-180deg);
+            }
+            50% {
+                opacity: 0.7;
+                transform: scale(1.1) rotate(-90deg);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1) rotate(0deg);
+            }
+        }
+        
+        .player-image-reveal {
+            animation: imageZoomIn 1s ease-out 0.5s both;
+        }
+        
+        @keyframes imageZoomIn {
+            0% { 
+                opacity: 0; 
+                transform: scale(0.3);
+            }
+            100% { 
+                opacity: 1; 
+                transform: scale(1);
+            }
+        }
+        
+        .player-name-reveal {
+            animation: nameTypewriter 2s ease-out 1s both;
+        }
+        
+        @keyframes nameTypewriter {
+            0% { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            100% { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Rotating rings */
+        .animate-spin-slow {
+            animation: spin-slow 8s linear infinite;
+        }
+        
+        .animate-spin-reverse {
+            animation: spin-reverse 6s linear infinite;
+        }
+        
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes spin-reverse {
+            from { transform: rotate(360deg); }
+            to { transform: rotate(0deg); }
+        }
+        
+        /* Sparkle effect */
+        .sparkle-effect {
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.8) 1px, transparent 1px),
+                radial-gradient(circle at 80% 80%, rgba(255, 255, 255, 0.6) 1px, transparent 1px),
+                radial-gradient(circle at 40% 70%, rgba(255, 255, 255, 0.4) 1px, transparent 1px),
+                radial-gradient(circle at 70% 30%, rgba(255, 255, 255, 0.7) 1px, transparent 1px);
+            animation: sparkle 2s ease-in-out infinite;
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+        
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: radial-gradient(circle, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            animation: particleFloat 4s ease-in-out infinite;
+        }
+        
+        .particle-1 {
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+        
+        .particle-2 {
+            top: 20%;
+            right: 15%;
+            animation-delay: 1s;
+        }
+        
+        .particle-3 {
+            bottom: 20%;
+            left: 20%;
+            animation-delay: 2s;
+        }
+        
+        .particle-4 {
+            bottom: 10%;
+            right: 10%;
+            animation-delay: 3s;
+        }
+        
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(0px) scale(0.8);
+                opacity: 0.6;
+            }
+            25% { 
+                transform: translateY(-20px) scale(1.2);
+                opacity: 1;
+            }
+            50% { 
+                transform: translateY(-10px) scale(1);
+                opacity: 0.8;
+            }
+            75% { 
+                transform: translateY(-30px) scale(1.1);
+                opacity: 0.9;
+            }
+        }
+        
+        /* Enhanced border gradients */
+        .border-gradient-to-r {
+            border-image: linear-gradient(to right, var(--tw-gradient-stops)) 1;
+        }
+        
+        /* Player fallback enhanced */
+        .player-fallback {
+            animation: fallbackPulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes fallbackPulse {
+            0%, 100% { 
+                transform: scale(1);
+                filter: brightness(1);
+            }
+            50% { 
+                transform: scale(1.1);
+                filter: brightness(1.2);
+            }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #8b5cf6, #06b6d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hover-lift {
+            transition: all 0.3s ease;
+        }
+        
+        .hover-lift:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.2);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 min-h-screen text-white relative overflow-x-hidden">
+    <!-- Background Effects -->
+    <div class="fixed inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-purple-900/20 via-slate-900 to-slate-900"></div>
+    <div class="fixed inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"%3E%3Cg fill="none" fill-rule="evenodd"%3E%3Cg fill="%239C92AC" fill-opacity="0.05"%3E%3Ccircle cx="30" cy="30" r="1"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-20"></div>
+    
+    <!-- Left Sidebar - Referee Controls -->
+    <div class="fixed left-0 top-0 h-full w-80 bg-gradient-to-b from-slate-900/95 via-purple-900/95 to-slate-900/95 backdrop-blur-lg border-r border-purple-500/20 z-40 overflow-y-auto">
+        <div class="p-6">
+            <!-- Sidebar Header -->
+            <div class="text-center mb-8">
+                <h2 class="text-2xl font-bold gradient-text mb-2">⚖️ Referee Panel</h2>
+                <p class="text-sm text-gray-400">Control the auction flow</p>
+            </div>
+
+            <!-- Section Selection -->
+            <div class="mb-8">
+                <h3 class="text-lg font-semibold text-white mb-4">Select Section</h3>
+                <div class="space-y-3">
+                    <div class="gradient-border hover-lift">
+                        <button onclick="selectSection('Batsmen')" class="gradient-border-inner w-full px-4 py-3 rounded-xl font-semibold transition-all hover:bg-orange-500/10">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">🏏</span>
+                                <span class="flex-1 text-left">Batsmen</span>
+                                <span class="text-sm bg-orange-500/20 px-2 py-1 rounded-full" id="batsmenCount">6</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="gradient-border hover-lift">
+                        <button onclick="selectSection('Bowlers')" class="gradient-border-inner w-full px-4 py-3 rounded-xl font-semibold transition-all hover:bg-purple-500/10">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">⚡</span>
+                                <span class="flex-1 text-left">Bowlers</span>
+                                <span class="text-sm bg-purple-500/20 px-2 py-1 rounded-full" id="bowlersCount">6</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="gradient-border hover-lift">
+                        <button onclick="selectSection('Allrounders')" class="gradient-border-inner w-full px-4 py-3 rounded-xl font-semibold transition-all hover:bg-green-500/10">
+                            <div class="flex items-center gap-3">
+                                <span class="text-xl">🎯</span>
+                                <span class="flex-1 text-left">Allrounders</span>
+                                <span class="text-sm bg-green-500/20 px-2 py-1 rounded-full" id="allroundersCount">6</span>
+                            </div>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-white mb-4">Actions</h3>
+                
+                <button onclick="spinWheel()" id="spinBtn" class="w-full bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 px-4 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed neon-glow" disabled>
+                    🎰 Spin Wheel
+                </button>
+                
+                <button onclick="startBidding()" id="startBidBtn" class="w-full bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 px-4 py-3 rounded-xl font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                    💰 Start Bidding
+                </button>
+                
+                <div class="grid grid-cols-2 gap-2">
+                    <button onclick="markUnsold()" id="unsoldBtn" class="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 px-3 py-2 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        ❌ Unsold
+                    </button>
+                    <button onclick="confirmWinner()" id="confirmBtn" class="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 px-3 py-2 rounded-lg text-sm font-semibold transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                        ✅ Confirm
+                    </button>
+                </div>
+                
+                <div class="border-t border-gray-700 pt-4 mt-6">
+                    <button onclick="openCustomizeModal()" class="w-full bg-gradient-to-r from-pink-500 to-rose-500 hover:from-pink-600 hover:to-rose-600 px-4 py-3 rounded-xl font-semibold transition-all mb-3">
+                        ⚙️ Customize Players
+                    </button>
+                    <button onclick="downloadAuctionData()" class="w-full bg-gradient-to-r from-indigo-500 to-purple-500 hover:from-indigo-600 hover:to-purple-600 px-4 py-3 rounded-xl font-semibold transition-all">
+                        📊 Download Excel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="ml-80 relative z-10">
+        <div class="container mx-auto px-6 py-8 max-w-6xl">
+            <!-- Header -->
+            <!-- <div class="text-center mb-12">
+                <h1 class="text-5xl md:text-6xl font-bold gradient-text mb-4 floating">
+                    🏏 Cricket Auction
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    Experience the thrill of cricket auctions with our interactive platform
+                </p>
+            </div> -->
+
+        <!-- Current Player Display -->
+        <div class="glass-card rounded-2xl p-8 mb-8 neon-glow player-reveal-card" id="playerDisplay" style="display: none;">
+            <div class="text-center">
+                <div class="mb-6">
+                    <!-- Enhanced Player Image Container -->
+                    <div class="relative mx-auto mb-6" style="width: 240px; height: 320px;">
+                        <!-- Rotating rings around image -->
+                        <div class="absolute inset-0 rounded-2xl border-4 border-gradient-to-r from-yellow-400 via-red-500 to-purple-600 animate-spin-slow opacity-60"></div>
+                        <div class="absolute inset-2 rounded-xl border-2 border-gradient-to-r from-cyan-400 via-blue-500 to-indigo-600 animate-spin-reverse opacity-40"></div>
+                        
+                        <!-- Pulsing glow effect -->
+                        <div class="absolute inset-4 rounded-xl bg-gradient-to-r from-purple-500/30 to-cyan-500/30 animate-pulse blur-xl"></div>
+                        
+                        <!-- Main image container -->
+                        <div class="relative w-full h-full rounded-2xl overflow-hidden border-8 border-gradient-to-r from-yellow-400 via-orange-500 to-red-500 shadow-2xl player-image-container" id="playerImageContainer">
+                            <!-- Sparkle effects -->
+                            <div class="absolute inset-0 sparkle-effect"></div>
+                            
+                            <!-- Default cricket icon (fallback) -->
+                            <div class="w-full h-full bg-gradient-to-br from-purple-600 via-blue-600 to-cyan-600 flex items-center justify-center text-8xl player-fallback" id="playerFallback">
+                                🏏
+                            </div>
+                            
+                            <!-- Player image -->
+                            <img id="playerImage" class="w-full h-full object-cover player-image-reveal" style="display: none;" alt="Player">
+                        </div>
+                        
+                        <!-- Floating particles -->
+                        <div class="absolute inset-0 pointer-events-none">
+                            <div class="particle particle-1"></div>
+                            <div class="particle particle-2"></div>
+                            <div class="particle particle-3"></div>
+                            <div class="particle particle-4"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Player name with typewriter effect -->
+                    <h3 class="text-4xl font-bold gradient-text mb-2 player-name-reveal" id="playerName">Player Name</h3>
+                </div>
+                <div class="flex justify-center items-center gap-6 mb-6">
+                    <div class="glass-card px-6 py-3 rounded-xl hover-lift">
+                        <div class="text-sm text-gray-400 mb-1">Category</div>
+                        <div class="font-semibold" id="playerCategory">Category</div>
+                    </div>
+                    <div class="glass-card px-6 py-3 rounded-xl border border-green-500/30 hover-lift">
+                        <div class="text-sm text-gray-400 mb-1">Base Price</div>
+                        <div class="font-bold text-green-400 text-lg" id="playerBasePrice">Base Price</div>
+                    </div>
+                </div>
+                <div class="text-lg text-gray-300" id="playerStatus">Status: Available</div>
+            </div>
+        </div>
+
+        <!-- Bidding Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8" id="biddingSection" style="display: none;">
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-red-500 hover-lift">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
+                        🔴
+                    </div>
+                    <h4 class="text-xl font-bold text-white">Team A Bidding</h4>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex gap-3">
+                        <input type="number" id="teamABid" class="flex-1 px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-red-500 focus:outline-none transition-colors" placeholder="Enter bid amount" step="0.1">
+                        <button onclick="placeBid('A')" class="bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 px-6 py-3 rounded-xl font-semibold transition-all">
+                            Place Bid
+                        </button>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl text-center">
+                        <div class="text-sm text-gray-400 mb-1">Current Bid</div>
+                        <div class="text-xl font-bold text-red-400" id="teamACurrentBid">-</div>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-blue-500 hover-lift">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                        🔵
+                    </div>
+                    <h4 class="text-xl font-bold text-white">Team B Bidding</h4>
+                </div>
+                <div class="space-y-4">
+                    <div class="flex gap-3">
+                        <input type="number" id="teamBBid" class="flex-1 px-4 py-3 bg-gray-800/50 border border-gray-600 rounded-xl text-white placeholder-gray-400 focus:border-blue-500 focus:outline-none transition-colors" placeholder="Enter bid amount" step="0.1">
+                        <button onclick="placeBid('B')" class="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 px-6 py-3 rounded-xl font-semibold transition-all">
+                            Place Bid
+                        </button>
+                    </div>
+                    <div class="glass-card p-4 rounded-xl text-center">
+                        <div class="text-sm text-gray-400 mb-1">Current Bid</div>
+                        <div class="text-xl font-bold text-blue-400" id="teamBCurrentBid">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wheel Section and Auction Log -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Wheel Section -->
+            <div class="glass-card rounded-2xl p-8 hover-lift">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                        🎰
+                    </div>
+                    <h3 class="text-2xl font-bold text-white" id="wheelTitle">Select a section to begin</h3>
+                </div>
+                <div class="flex justify-center">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-r from-purple-500/20 to-cyan-500/20 rounded-full blur-xl"></div>
+                        <svg width="300" height="300" class="wheel relative z-10" id="wheelSvg">
+                            <circle cx="150" cy="150" r="140" fill="none" stroke="#374151" stroke-width="4"/>
+                            <!-- Wheel segments will be generated here -->
+                        </svg>
+                        <div class="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-2 z-20">
+                            <div class="w-0 h-0 border-l-4 border-r-4 border-b-8 border-l-transparent border-r-transparent border-b-yellow-400 drop-shadow-lg"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Auction Log -->
+            <div class="glass-card rounded-2xl p-8 hover-lift">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-8 h-8 bg-gradient-to-r from-yellow-500 to-orange-500 rounded-lg flex items-center justify-center">
+                        📋
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">Auction Log</h3>
+                </div>
+                <div id="auctionLog" class="max-h-60 overflow-y-auto space-y-2 scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-800">
+                    <div class="text-gray-400 text-center py-8 text-sm">
+                        <div class="w-12 h-12 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                            📝
+                        </div>
+                        Auction log will appear here...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Unsold Players Section -->
+        <div class="glass-card rounded-2xl p-8 mb-8 hover-lift" id="unsoldSection" style="display: none;">
+            <div class="flex items-center justify-between mb-6">
+                <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 bg-gradient-to-r from-gray-500 to-slate-500 rounded-lg flex items-center justify-center">
+                        ❌
+                    </div>
+                    <h3 class="text-2xl font-bold text-white">Unsold Players</h3>
+                </div>
+                <div class="text-sm text-gray-400">
+                    <span id="unsoldCount">0</span> players unsold
+                </div>
+            </div>
+            <div id="unsoldPlayersList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <!-- Unsold players will appear here -->
+            </div>
+        </div>
+
+        <!-- Team Squads -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <!-- Team A Squad -->
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-red-500 hover-lift">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-lg flex items-center justify-center">
+                            🔴
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Team A Squad</h3>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold gradient-text" id="teamABudget">₹100.0 Cr</div>
+                        <div class="text-sm text-gray-400">Budget Remaining</div>
+                    </div>
+                </div>
+                <div id="teamASquad" class="space-y-4">
+                    <div class="text-gray-400 text-center py-8">
+                        <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            👥
+                        </div>
+                        <div class="text-lg font-semibold mb-2">No players yet</div>
+                        <div class="text-sm">Players will appear here after successful bids</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Team B Squad -->
+            <div class="glass-card rounded-2xl p-8 border-l-4 border-blue-500 hover-lift">
+                <div class="flex items-center justify-between mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
+                            🔵
+                        </div>
+                        <h3 class="text-2xl font-bold text-white">Team B Squad</h3>
+                    </div>
+                    <div class="text-right">
+                        <div class="text-2xl font-bold gradient-text" id="teamBBudget">₹100.0 Cr</div>
+                        <div class="text-sm text-gray-400">Budget Remaining</div>
+                    </div>
+                </div>
+                <div id="teamBSquad" class="space-y-4">
+                    <div class="text-gray-400 text-center py-8">
+                        <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            👥
+                        </div>
+                        <div class="text-lg font-semibold mb-2">No players yet</div>
+                        <div class="text-sm">Players will appear here after successful bids</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Customize Players Modal -->
+    <div id="customizeModal" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="glass-card rounded-2xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-3xl font-bold gradient-text">⚙️ Customize Players</h2>
+                    <button onclick="closeCustomizeModal()" class="text-gray-400 hover:text-white text-2xl">✕</button>
+                </div>
+                
+                <div class="space-y-6 max-h-96 overflow-y-auto pr-2">
+                    <!-- Batsmen Section -->
+                    <div class="glass-card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 bg-gradient-to-r from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
+                                🏏
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Batsmen</h3>
+                        </div>
+                        <div id="batsmenCustomize" class="space-y-3 mb-4">
+                            <!-- Players will be populated here -->
+                        </div>
+                        <button onclick="addPlayer('Batsmen')" class="w-full bg-orange-600 hover:bg-orange-700 px-4 py-2 rounded-lg font-semibold transition-colors">
+                            + Add Batsman
+                        </button>
+                    </div>
+                    
+                    <!-- Bowlers Section -->
+                    <div class="glass-card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 bg-gradient-to-r from-purple-500 to-blue-500 rounded-lg flex items-center justify-center">
+                                ⚡
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Bowlers</h3>
+                        </div>
+                        <div id="bowlersCustomize" class="space-y-3 mb-4">
+                            <!-- Players will be populated here -->
+                        </div>
+                        <button onclick="addPlayer('Bowlers')" class="w-full bg-purple-600 hover:bg-purple-700 px-4 py-2 rounded-lg font-semibold transition-colors">
+                            + Add Bowler
+                        </button>
+                    </div>
+                    
+                    <!-- Allrounders Section -->
+                    <div class="glass-card rounded-xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg flex items-center justify-center">
+                                🎯
+                            </div>
+                            <h3 class="text-xl font-bold text-white">Allrounders</h3>
+                        </div>
+                        <div id="allroundersCustomize" class="space-y-3 mb-4">
+                            <!-- Players will be populated here -->
+                        </div>
+                        <button onclick="addPlayer('Allrounders')" class="w-full bg-green-600 hover:bg-green-700 px-4 py-2 rounded-lg font-semibold transition-colors">
+                            + Add Allrounder
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="flex gap-4 mt-8">
+                    <button onclick="saveCustomPlayers()" class="flex-1 bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 px-6 py-3 rounded-xl font-semibold transition-all">
+                        ✅ Save Changes
+                    </button>
+                    <button onclick="resetToDefault()" class="flex-1 bg-gradient-to-r from-gray-500 to-gray-600 hover:from-gray-600 hover:to-gray-700 px-6 py-3 rounded-xl font-semibold transition-all">
+                        🔄 Reset to Default
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+
+    <script>
+        // Game State
+        let gameState = {
+            teamABudget: 100.0,
+            teamBBudget: 100.0,
+            teamASquad: [],
+            teamBSquad: [],
+            currentSection: null,
+            currentPlayer: null,
+            biddingActive: false,
+            currentBids: { A: 0, B: 0 },
+            highestBidder: null,
+            unsoldPlayers: []
+        };
+
+        // Player Database
+        const players = {
+            Batsmen: [
+                { name: "Amit Singh", basePrice: 2.0 },
+                { name: "Amit RLI", basePrice: 1.8 },
+                { name: "Govind", basePrice: 1.5 },
+                { name: "Manjit", basePrice: 1.2 },
+                { name: "Prabhat", basePrice: 1.0 },
+                { name: "Prakash", basePrice: 0.8 },
+                { name: "Rajan", basePrice: 1.8 }
+            ],
+            Bowlers: [
+                { name: "Jasprit Bumrah", basePrice: 2.2 },
+                { name: "Mohammed Shami", basePrice: 1.6 },
+                { name: "Yuzvendra Chahal", basePrice: 1.4 },
+                { name: "Bhuvneshwar Kumar", basePrice: 1.3 },
+                { name: "Kuldeep Yadav", basePrice: 1.0 },
+                { name: "Mohammed Siraj", basePrice: 0.9 }
+            ],
+            Allrounders: [
+                { name: "Hardik Pandya", basePrice: 2.5 },
+                { name: "Ravindra Jadeja", basePrice: 2.0 },
+                { name: "Washington Sundar", basePrice: 1.2 },
+                { name: "Axar Patel", basePrice: 1.1 },
+                { name: "Deepak Hooda", basePrice: 0.8 },
+                { name: "Krunal Pandya", basePrice: 0.7 }
+            ]
+        };
+
+        // Available players (copy of original for manipulation)
+        let availablePlayers = JSON.parse(JSON.stringify(players));
+
+        // Store original default players for reset functionality
+        const defaultPlayers = JSON.parse(JSON.stringify(players));
+
+        function selectSection(section) {
+            // Check if section is empty and try to refill with unsold players
+            if (availablePlayers[section].length === 0) {
+                const unsoldFromSection = gameState.unsoldPlayers.filter(player => player.category === section);
+                
+                if (unsoldFromSection.length > 0) {
+                    // Refill section with unsold players
+                    availablePlayers[section] = unsoldFromSection.map(player => ({
+                        name: player.name,
+                        basePrice: player.basePrice
+                    }));
+                    
+                    // Remove these players from unsold list
+                    gameState.unsoldPlayers = gameState.unsoldPlayers.filter(player => player.category !== section);
+                    
+                    addToLog(`🔄 ${section} section refilled with ${unsoldFromSection.length} unsold players!`, 'text-cyan-400');
+                    updateSectionCounts();
+                } else {
+                    addToLog(`❌ No players left in ${section} section!`, 'text-red-400');
+                    return;
+                }
+            }
+            
+            gameState.currentSection = section;
+            document.getElementById('wheelTitle').textContent = `${section} Section Selected`;
+            document.getElementById('spinBtn').disabled = false;
+            
+            generateWheel(section);
+            addToLog(`🎯 Referee selected ${section} section`, 'text-yellow-400');
+        }
+
+        function generateWheel(section) {
+            const svg = document.getElementById('wheelSvg');
+            const players = availablePlayers[section];
+            const anglePerSegment = 360 / players.length;
+            
+            // Clear existing segments
+            svg.innerHTML = '<circle cx="150" cy="150" r="140" fill="none" stroke="#374151" stroke-width="4"/>';
+            
+            const colors = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#3b82f6', '#8b5cf6'];
+            
+            players.forEach((player, index) => {
+                const startAngle = index * anglePerSegment - 90;
+                const endAngle = (index + 1) * anglePerSegment - 90;
+                
+                const x1 = 150 + 130 * Math.cos(startAngle * Math.PI / 180);
+                const y1 = 150 + 130 * Math.sin(startAngle * Math.PI / 180);
+                const x2 = 150 + 130 * Math.cos(endAngle * Math.PI / 180);
+                const y2 = 150 + 130 * Math.sin(endAngle * Math.PI / 180);
+                
+                const largeArcFlag = anglePerSegment > 180 ? 1 : 0;
+                
+                const pathData = `M 150 150 L ${x1} ${y1} A 130 130 0 ${largeArcFlag} 1 ${x2} ${y2} Z`;
+                
+                const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+                path.setAttribute('d', pathData);
+                path.setAttribute('fill', colors[index % colors.length]);
+                path.setAttribute('stroke', '#1f2937');
+                path.setAttribute('stroke-width', '2');
+                svg.appendChild(path);
+                
+                // Add text
+                const textAngle = startAngle + anglePerSegment / 2;
+                const textX = 150 + 90 * Math.cos(textAngle * Math.PI / 180);
+                const textY = 150 + 90 * Math.sin(textAngle * Math.PI / 180);
+                
+                const text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                text.setAttribute('x', textX);
+                text.setAttribute('y', textY);
+                text.setAttribute('text-anchor', 'middle');
+                text.setAttribute('dominant-baseline', 'middle');
+                text.setAttribute('fill', 'white');
+                text.setAttribute('font-size', '10');
+                text.setAttribute('font-weight', 'bold');
+                text.textContent = player.name.split(' ')[0];
+                svg.appendChild(text);
+            });
+        }
+
+        function spinWheel() {
+            if (!gameState.currentSection || availablePlayers[gameState.currentSection].length === 0) return;
+            
+            const players = availablePlayers[gameState.currentSection];
+            const randomIndex = Math.floor(Math.random() * players.length);
+            const selectedPlayer = players[randomIndex];
+            
+            // Calculate spin rotation to land on the correct player
+            const anglePerSegment = 360 / players.length;
+            // The pointer is at the top (12 o'clock), so we need to account for that
+            // Each segment starts at index * anglePerSegment - 90 degrees
+            const targetAngle = randomIndex * anglePerSegment + (anglePerSegment / 2);
+            
+            // Add random variations for unpredictability but ensure correct landing
+            const randomSpins = 8 + Math.floor(Math.random() * 5); // 8-12 full rotations
+            const randomVariation = (Math.random() - 0.5) * anglePerSegment * 0.3; // Small variation within the segment
+            
+            // Calculate final rotation: we want the selected segment to be at the top (0 degrees)
+            // So we rotate to bring that segment to the top
+            const finalRotation = randomSpins * 360 + (360 - targetAngle) + randomVariation;
+            
+            const wheel = document.getElementById('wheelSvg');
+            
+            // Add random duration between 3-5 seconds
+            const spinDuration = 3000 + Math.random() * 2000;
+            wheel.style.transition = `transform ${spinDuration}ms cubic-bezier(0.23, 1, 0.32, 1)`;
+            wheel.style.transform = `rotate(${finalRotation}deg)`;
+            
+            document.getElementById('spinBtn').disabled = true;
+            
+            setTimeout(() => {
+                gameState.currentPlayer = selectedPlayer;
+                showPlayerDetails(selectedPlayer);
+                
+                // Remove player from available pool
+                availablePlayers[gameState.currentSection].splice(randomIndex, 1);
+                
+                // Regenerate wheel without the selected player
+                if (availablePlayers[gameState.currentSection].length > 0) {
+                    generateWheel(gameState.currentSection);
+                } else {
+                    // Clear wheel if no players left
+                    const svg = document.getElementById('wheelSvg');
+                    svg.innerHTML = '<circle cx="150" cy="150" r="140" fill="#374151" stroke="#6b7280" stroke-width="4"/><text x="150" y="150" text-anchor="middle" dominant-baseline="middle" fill="#9ca3af" font-size="16">Section Complete</text>';
+                }
+                
+                document.getElementById('startBidBtn').disabled = false;
+                document.getElementById('unsoldBtn').disabled = false;
+                
+                addToLog(`🎰 Wheel selected: ${selectedPlayer.name} (${gameState.currentSection})`, 'text-green-400');
+                
+                // Reset transition for next spin
+                wheel.style.transition = 'transform 3s cubic-bezier(0.23, 1, 0.32, 1)';
+            }, spinDuration);
+        }
+
+        function showPlayerDetails(player) {
+            // Reset animations by hiding and showing the display
+            const playerDisplay = document.getElementById('playerDisplay');
+            playerDisplay.style.display = 'none';
+            
+            // Force reflow to reset animations
+            playerDisplay.offsetHeight;
+            
+            // Show with animations
+            playerDisplay.style.display = 'block';
+            
+            // Update player details
+            document.getElementById('playerName').textContent = player.name;
+            document.getElementById('playerCategory').textContent = gameState.currentSection;
+            document.getElementById('playerBasePrice').textContent = `₹${player.basePrice} Cr`;
+            document.getElementById('playerStatus').textContent = 'Status: Available for Bidding';
+            
+            // Update player image with enhanced reveal
+            const playerImage = document.getElementById('playerImage');
+            const playerFallback = document.getElementById('playerFallback');
+            
+            // Reset image states
+            playerImage.style.display = 'none';
+            playerFallback.style.display = 'flex';
+            
+            // Try to load player image
+            const img = new Image();
+            img.onload = function() {
+                // Image loaded successfully - show it with animation
+                setTimeout(() => {
+                    playerImage.src = `images/${player.name}.png`;
+                    playerImage.alt = player.name;
+                    playerImage.style.display = 'block';
+                    playerFallback.style.display = 'none';
+                }, 800); // Delay to sync with container animation
+            };
+            
+            img.onerror = function() {
+                // Image failed to load - enhance fallback with player initials
+                const initials = player.name.split(' ').map(n => n[0]).join('');
+                playerFallback.innerHTML = `
+                    <div class="text-center">
+                        <div class="text-4xl mb-2">🏏</div>
+                        <div class="text-2xl font-bold">${initials}</div>
+                    </div>
+                `;
+            };
+            
+            // Start loading the image
+            img.src = `images/${player.name}.png`;
+        }
+
+        function startBidding() {
+            if (!gameState.currentPlayer) return;
+            
+            gameState.biddingActive = true;
+            gameState.currentBids = { A: 0, B: 0 };
+            gameState.highestBidder = null;
+            
+            document.getElementById('biddingSection').style.display = 'grid';
+            document.getElementById('startBidBtn').disabled = true;
+            document.getElementById('unsoldBtn').disabled = true;
+            
+            // Set minimum bid amounts
+            document.getElementById('teamABid').value = gameState.currentPlayer.basePrice;
+            document.getElementById('teamBBid').value = gameState.currentPlayer.basePrice;
+            
+            addToLog(`💰 Bidding started for ${gameState.currentPlayer.name} (Base: ₹${gameState.currentPlayer.basePrice} Cr)`, 'text-blue-400');
+        }
+
+        function placeBid(team) {
+            if (!gameState.biddingActive) return;
+            
+            const bidInput = document.getElementById(`team${team}Bid`);
+            const bidAmount = parseFloat(bidInput.value);
+            const teamBudget = team === 'A' ? gameState.teamABudget : gameState.teamBBudget;
+            
+            // Validation
+            if (isNaN(bidAmount) || bidAmount < gameState.currentPlayer.basePrice) {
+                alert(`Minimum bid is ₹${gameState.currentPlayer.basePrice} Cr`);
+                return;
+            }
+            
+            if (bidAmount > teamBudget) {
+                alert(`Insufficient budget! Available: ₹${teamBudget} Cr`);
+                return;
+            }
+            
+            const otherTeam = team === 'A' ? 'B' : 'A';
+            const otherTeamBid = gameState.currentBids[otherTeam];
+            
+            if (bidAmount <= otherTeamBid) {
+                alert(`Bid must be higher than ₹${otherTeamBid} Cr`);
+                return;
+            }
+            
+            // Place bid
+            gameState.currentBids[team] = bidAmount;
+            gameState.highestBidder = team;
+            
+            document.getElementById(`team${team}CurrentBid`).textContent = `₹${bidAmount} Cr`;
+            document.getElementById(`team${team}CurrentBid`).classList.add('bid-animation');
+            
+            // Update other team's minimum bid
+            document.getElementById(`team${otherTeam}Bid`).value = bidAmount + 0.1;
+            
+            document.getElementById('confirmBtn').disabled = false;
+            
+            addToLog(`🔥 Team ${team} bids ₹${bidAmount} Cr for ${gameState.currentPlayer.name}`, team === 'A' ? 'text-red-400' : 'text-blue-400');
+            
+            setTimeout(() => {
+                document.getElementById(`team${team}CurrentBid`).classList.remove('bid-animation');
+            }, 500);
+        }
+
+        function confirmWinner() {
+            if (!gameState.highestBidder || !gameState.currentPlayer) return;
+            
+            const winningTeam = gameState.highestBidder;
+            const winningBid = gameState.currentBids[winningTeam];
+            const player = { ...gameState.currentPlayer, soldPrice: winningBid };
+            
+            // Add category info to player
+            player.category = gameState.currentSection;
+            
+            // Add to team and deduct budget
+            if (winningTeam === 'A') {
+                gameState.teamASquad.push(player);
+                gameState.teamABudget -= winningBid;
+                updateTeamDisplay('A');
+            } else {
+                gameState.teamBSquad.push(player);
+                gameState.teamBBudget -= winningBid;
+                updateTeamDisplay('B');
+            }
+            
+            addToLog(`✅ ${gameState.currentPlayer.name} SOLD to Team ${winningTeam} for ₹${winningBid} Cr`, 'text-green-400');
+            
+            resetAuctionState();
+        }
+
+        function markUnsold() {
+            if (!gameState.currentPlayer) return;
+            
+            // Add category info to unsold player
+            const unsoldPlayer = { ...gameState.currentPlayer, category: gameState.currentSection };
+            gameState.unsoldPlayers.push(unsoldPlayer);
+            addToLog(`❌ ${gameState.currentPlayer.name} marked as UNSOLD`, 'text-red-400');
+            
+            // Update unsold players display
+            updateUnsoldDisplay();
+            
+            resetAuctionState();
+        }
+
+        function resetAuctionState() {
+            gameState.biddingActive = false;
+            gameState.currentPlayer = null;
+            gameState.currentBids = { A: 0, B: 0 };
+            gameState.highestBidder = null;
+            
+            document.getElementById('playerDisplay').style.display = 'none';
+            document.getElementById('biddingSection').style.display = 'none';
+            
+            document.getElementById('teamACurrentBid').textContent = '-';
+            document.getElementById('teamBCurrentBid').textContent = '-';
+            document.getElementById('teamABid').value = '';
+            document.getElementById('teamBBid').value = '';
+            
+            document.getElementById('spinBtn').disabled = false;
+            document.getElementById('startBidBtn').disabled = true;
+            document.getElementById('unsoldBtn').disabled = true;
+            document.getElementById('confirmBtn').disabled = true;
+            
+            // Update section counts
+            updateSectionCounts();
+            
+            // Check if section is empty
+            if (gameState.currentSection && availablePlayers[gameState.currentSection].length === 0) {
+                document.getElementById('wheelTitle').textContent = 'Section completed! Select another section.';
+                document.getElementById('spinBtn').disabled = true;
+                gameState.currentSection = null;
+            }
+        }
+
+        function updateSectionCounts() {
+            document.getElementById('batsmenCount').textContent = availablePlayers.Batsmen.length;
+            document.getElementById('bowlersCount').textContent = availablePlayers.Bowlers.length;
+            document.getElementById('allroundersCount').textContent = availablePlayers.Allrounders.length;
+        }
+
+        function updateUnsoldDisplay() {
+            const unsoldSection = document.getElementById('unsoldSection');
+            const unsoldCount = document.getElementById('unsoldCount');
+            const unsoldList = document.getElementById('unsoldPlayersList');
+            
+            if (gameState.unsoldPlayers.length === 0) {
+                unsoldSection.style.display = 'none';
+                return;
+            }
+            
+            unsoldSection.style.display = 'block';
+            unsoldCount.textContent = gameState.unsoldPlayers.length;
+            
+            // Group unsold players by category
+            const groupedUnsold = {
+                Batsmen: gameState.unsoldPlayers.filter(p => p.category === 'Batsmen'),
+                Bowlers: gameState.unsoldPlayers.filter(p => p.category === 'Bowlers'),
+                Allrounders: gameState.unsoldPlayers.filter(p => p.category === 'Allrounders')
+            };
+            
+            let html = '';
+            
+            Object.entries(groupedUnsold).forEach(([category, players]) => {
+                if (players.length > 0) {
+                    const categoryColors = {
+                        Batsmen: 'from-orange-500 to-red-500',
+                        Bowlers: 'from-purple-500 to-blue-500',
+                        Allrounders: 'from-green-500 to-emerald-500'
+                    };
+                    
+                    const categoryIcons = {
+                        Batsmen: '🏏',
+                        Bowlers: '⚡',
+                        Allrounders: '🎯'
+                    };
+                    
+                    html += `
+                        <div class="col-span-full">
+                            <div class="flex items-center gap-2 mb-3">
+                                <div class="w-6 h-6 bg-gradient-to-r ${categoryColors[category]} rounded-lg flex items-center justify-center text-sm">
+                                    ${categoryIcons[category]}
+                                </div>
+                                <h4 class="text-lg font-semibold text-white">${category}</h4>
+                                <span class="text-sm text-gray-400">(${players.length} players)</span>
+                            </div>
+                        </div>
+                    `;
+                    
+                    players.forEach(player => {
+                        html += `
+                            <div class="glass-card rounded-xl p-4 border border-gray-600/50">
+                                <div class="flex items-center gap-3">
+                                    <div class="relative">
+                                        <img src="images/${player.name}.png" alt="${player.name}" class="w-10 h-10 rounded-full object-cover border-2 border-gray-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                                        <div class="w-10 h-10 bg-gradient-to-r from-gray-500 to-slate-500 rounded-full flex items-center justify-center text-sm font-bold" style="display: none;">
+                                            ${player.name.split(' ').map(n => n[0]).join('')}
+                                        </div>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="font-semibold text-white">${player.name}</div>
+                                        <div class="text-sm text-gray-400">₹${player.basePrice} Cr</div>
+                                    </div>
+                                    <div class="text-xs bg-red-500/20 text-red-400 px-2 py-1 rounded-full">
+                                        UNSOLD
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                }
+            });
+            
+            if (html === '') {
+                html = `
+                    <div class="col-span-full text-gray-400 text-center py-8">
+                        <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            ✅
+                        </div>
+                        <div class="text-lg font-semibold mb-2">No unsold players</div>
+                        <div class="text-sm">All players have been successfully auctioned!</div>
+                    </div>
+                `;
+            }
+            
+            unsoldList.innerHTML = html;
+        }
+
+        function updateTeamDisplay(team) {
+            const squad = team === 'A' ? gameState.teamASquad : gameState.teamBSquad;
+            const budget = team === 'A' ? gameState.teamABudget : gameState.teamBBudget;
+            
+            // Update budget display
+            document.getElementById(`team${team}Budget`).textContent = `₹${budget.toFixed(1)} Cr`;
+            
+            // Update squad display
+            const squadContainer = document.getElementById(`team${team}Squad`);
+            
+            if (squad.length === 0) {
+                squadContainer.innerHTML = `
+                    <div class="text-gray-400 text-center py-8">
+                        <div class="w-16 h-16 bg-gray-800 rounded-full flex items-center justify-center mx-auto mb-4">
+                            👥
+                        </div>
+                        <div class="text-lg font-semibold mb-2">No players yet</div>
+                        <div class="text-sm">Players will appear here after successful bids</div>
+                    </div>
+                `;
+                return;
+            }
+            
+            squadContainer.innerHTML = squad.map(player => `
+                <div class="glass-card rounded-xl p-4 hover-lift">
+                    <div class="flex items-center gap-4">
+                        <div class="relative">
+                            <img src="images/${player.name}.png" alt="${player.name}" class="w-12 h-12 rounded-full object-cover border-2 border-purple-500" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                            <div class="w-12 h-12 bg-gradient-to-r from-purple-500 to-cyan-500 rounded-full flex items-center justify-center text-lg font-bold" style="display: none;">
+                                ${player.name.split(' ').map(n => n[0]).join('')}
+                            </div>
+                        </div>
+                        <div class="flex-1">
+                            <div class="font-bold text-white text-lg">${player.name}</div>
+                            <div class="text-sm text-gray-400">${player.category || 'Unknown'}</div>
+                        </div>
+                        <div class="text-right">
+                            <div class="font-bold text-green-400 text-lg">₹${player.soldPrice} Cr</div>
+                            <div class="text-xs text-gray-500">Base: ₹${player.basePrice} Cr</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToLog(message, className = 'text-white') {
+            const log = document.getElementById('auctionLog');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            if (log.children.length === 1 && log.children[0].textContent.includes('Auction log will appear here')) {
+                log.innerHTML = '';
+            }
+            
+            const logEntry = document.createElement('div');
+            logEntry.className = `${className} text-sm`;
+            logEntry.innerHTML = `<span class="text-gray-400">[${timestamp}]</span> ${message}`;
+            
+            log.appendChild(logEntry);
+            log.scrollTop = log.scrollHeight;
+        }
+
+        function downloadAuctionData() {
+            // Create workbook
+            const wb = XLSX.utils.book_new();
+            
+            // Team A data
+            const teamAData = gameState.teamASquad.map((player, index) => ({
+                'S.No': index + 1,
+                'Player Name': player.name,
+                'Category': player.category || getPlayerCategory(player.name),
+                'Base Price (Cr)': player.basePrice,
+                'Sold Price (Cr)': player.soldPrice,
+                'Profit/Loss (Cr)': (player.soldPrice - player.basePrice).toFixed(1)
+            }));
+            
+            // Add team summary for Team A
+            teamAData.push({
+                'S.No': '',
+                'Player Name': 'TEAM A SUMMARY',
+                'Category': '',
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            teamAData.push({
+                'S.No': '',
+                'Player Name': 'Total Players',
+                'Category': gameState.teamASquad.length,
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            teamAData.push({
+                'S.No': '',
+                'Player Name': 'Total Spent',
+                'Category': `₹${gameState.teamASquad.reduce((sum, p) => sum + p.soldPrice, 0).toFixed(1)} Cr`,
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            teamAData.push({
+                'S.No': '',
+                'Player Name': 'Remaining Budget',
+                'Category': `₹${gameState.teamABudget.toFixed(1)} Cr`,
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            
+            // Team B data
+            const teamBData = gameState.teamBSquad.map((player, index) => ({
+                'S.No': index + 1,
+                'Player Name': player.name,
+                'Category': player.category || getPlayerCategory(player.name),
+                'Base Price (Cr)': player.basePrice,
+                'Sold Price (Cr)': player.soldPrice,
+                'Profit/Loss (Cr)': (player.soldPrice - player.basePrice).toFixed(1)
+            }));
+            
+            // Add team summary for Team B
+            teamBData.push({
+                'S.No': '',
+                'Player Name': 'TEAM B SUMMARY',
+                'Category': '',
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            teamBData.push({
+                'S.No': '',
+                'Player Name': 'Total Players',
+                'Category': gameState.teamBSquad.length,
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            teamBData.push({
+                'S.No': '',
+                'Player Name': 'Total Spent',
+                'Category': `₹${gameState.teamBSquad.reduce((sum, p) => sum + p.soldPrice, 0).toFixed(1)} Cr`,
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            teamBData.push({
+                'S.No': '',
+                'Player Name': 'Remaining Budget',
+                'Category': `₹${gameState.teamBBudget.toFixed(1)} Cr`,
+                'Base Price (Cr)': '',
+                'Sold Price (Cr)': '',
+                'Profit/Loss (Cr)': ''
+            });
+            
+            // Unsold players data
+            const unsoldData = gameState.unsoldPlayers.map((player, index) => ({
+                'S.No': index + 1,
+                'Player Name': player.name,
+                'Category': player.category || getPlayerCategory(player.name),
+                'Base Price (Cr)': player.basePrice,
+                'Status': 'UNSOLD'
+            }));
+            
+            // Create worksheets
+            const wsTeamA = XLSX.utils.json_to_sheet(teamAData);
+            const wsTeamB = XLSX.utils.json_to_sheet(teamBData);
+            const wsUnsold = XLSX.utils.json_to_sheet(unsoldData);
+            
+            // Add worksheets to workbook
+            XLSX.utils.book_append_sheet(wb, wsTeamA, "Team A");
+            XLSX.utils.book_append_sheet(wb, wsTeamB, "Team B");
+            if (unsoldData.length > 0) {
+                XLSX.utils.book_append_sheet(wb, wsUnsold, "Unsold Players");
+            }
+            
+            // Generate filename with timestamp
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/:/g, '-');
+            const filename = `Cricket_Auction_Results_${timestamp}.xlsx`;
+            
+            // Download file
+            XLSX.writeFile(wb, filename);
+            
+            addToLog(`📊 Auction data downloaded as ${filename}`, 'text-indigo-400');
+        }
+        
+        function getPlayerCategory(playerName) {
+            for (const [category, playerList] of Object.entries(players)) {
+                if (playerList.some(p => p.name === playerName)) {
+                    return category;
+                }
+            }
+            return 'Unknown';
+        }
+
+        // Player Customization Functions
+        function openCustomizeModal() {
+            document.getElementById('customizeModal').classList.remove('hidden');
+            populateCustomizeModal();
+        }
+
+        function closeCustomizeModal() {
+            document.getElementById('customizeModal').classList.add('hidden');
+        }
+
+        function populateCustomizeModal() {
+            ['Batsmen', 'Bowlers', 'Allrounders'].forEach(section => {
+                const container = document.getElementById(`${section.toLowerCase()}Customize`);
+                container.innerHTML = '';
+                
+                players[section].forEach((player, index) => {
+                    const playerDiv = document.createElement('div');
+                    playerDiv.className = 'glass-card p-3 rounded-lg';
+                    playerDiv.innerHTML = `
+                        <div class="flex gap-2 mb-2">
+                            <input type="text" value="${player.name}" 
+                                   class="flex-1 px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-lg text-white text-sm placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+                                   placeholder="Player Name"
+                                   onchange="updatePlayerName('${section}', ${index}, this.value)">
+                            <button onclick="removePlayer('${section}', ${index})" 
+                                    class="bg-red-600 hover:bg-red-700 px-3 py-2 rounded-lg text-sm font-semibold transition-colors">
+                                🗑️
+                            </button>
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="text-sm text-gray-400 flex items-center">₹</span>
+                            <input type="number" value="${player.basePrice}" step="0.1" min="0.1"
+                                   class="flex-1 px-3 py-2 bg-gray-800/50 border border-gray-600 rounded-lg text-white text-sm placeholder-gray-400 focus:border-purple-500 focus:outline-none"
+                                   placeholder="Base Price (Cr)"
+                                   onchange="updatePlayerPrice('${section}', ${index}, parseFloat(this.value))">
+                            <span class="text-sm text-gray-400 flex items-center">Cr</span>
+                        </div>
+                    `;
+                    container.appendChild(playerDiv);
+                });
+            });
+        }
+
+        function addPlayer(section) {
+            const newPlayer = {
+                name: `New ${section.slice(0, -1)}`,
+                basePrice: 1.0
+            };
+            players[section].push(newPlayer);
+            populateCustomizeModal();
+        }
+
+        function removePlayer(section, index) {
+            if (players[section].length > 1) {
+                players[section].splice(index, 1);
+                populateCustomizeModal();
+            } else {
+                alert(`At least one ${section.slice(0, -1).toLowerCase()} must remain!`);
+            }
+        }
+
+        function updatePlayerName(section, index, newName) {
+            if (newName.trim()) {
+                players[section][index].name = newName.trim();
+            }
+        }
+
+        function updatePlayerPrice(section, index, newPrice) {
+            if (newPrice >= 0.1) {
+                players[section][index].basePrice = newPrice;
+            }
+        }
+
+        function saveCustomPlayers() {
+            // Validate that all sections have at least one player
+            const sections = ['Batsmen', 'Bowlers', 'Allrounders'];
+            for (const section of sections) {
+                if (players[section].length === 0) {
+                    alert(`${section} section cannot be empty!`);
+                    return;
+                }
+                
+                // Validate that all players have names and valid prices
+                for (const player of players[section]) {
+                    if (!player.name.trim()) {
+                        alert(`All players must have names!`);
+                        return;
+                    }
+                    if (player.basePrice < 0.1) {
+                        alert(`All players must have a base price of at least ₹0.1 Cr!`);
+                        return;
+                    }
+                }
+            }
+            
+            // Reset available players with new data
+            availablePlayers = JSON.parse(JSON.stringify(players));
+            
+            // Update section counts
+            updateSectionCounts();
+            
+            // Reset game state if auction is in progress
+            if (gameState.currentSection || gameState.currentPlayer) {
+                resetAuctionState();
+                gameState.currentSection = null;
+                document.getElementById('wheelTitle').textContent = 'Select a section to begin';
+                
+                // Clear wheel
+                const svg = document.getElementById('wheelSvg');
+                svg.innerHTML = '<circle cx="150" cy="150" r="140" fill="none" stroke="#374151" stroke-width="4"/>';
+            }
+            
+            closeCustomizeModal();
+            addToLog('⚙️ Player database updated successfully!', 'text-green-400');
+        }
+
+        function resetToDefault() {
+            if (confirm('Are you sure you want to reset to default players? This will clear any customizations.')) {
+                // Reset to original default players
+                Object.keys(players).forEach(section => {
+                    players[section] = JSON.parse(JSON.stringify(defaultPlayers[section]));
+                });
+                
+                populateCustomizeModal();
+                addToLog('🔄 Players reset to default database', 'text-yellow-400');
+            }
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('customizeModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCustomizeModal();
+            }
+        });
+
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            addToLog('🏏 Cricket Auction App initialized. Referee, please select a section to begin!', 'text-yellow-400');
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'97975a4370f647ec',t:'MTc1NjkyNDU4Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>

@@ -1,0 +1,209 @@
+{
+  "players": {
+    "Batsmen": [
+      {
+        "name": "Vishal Yadav",
+        "basePrice": 2,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Rohit Sharma",
+        "basePrice": 1.8,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "KL Rahul",
+        "basePrice": 1.5,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Shikhar Dhawan",
+        "basePrice": 1.2,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Shreyas Iyer",
+        "basePrice": 1,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Prithvi Shaw",
+        "basePrice": 0.8,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Suryakumar Yadav",
+        "basePrice": 1.3,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Ishan Kishan",
+        "basePrice": 1.1,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      }
+    ],
+    "Bowlers": [
+      {
+        "name": "Jasprit Bumrah",
+        "basePrice": 2.2,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Mohammed Shami",
+        "basePrice": 1.6,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Yuzvendra Chahal",
+        "basePrice": 1.4,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Bhuvneshwar Kumar",
+        "basePrice": 1.3,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Kuldeep Yadav",
+        "basePrice": 1,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Mohammed Siraj",
+        "basePrice": 0.9,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Rashid Khan",
+        "basePrice": 1.8,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Trent Boult",
+        "basePrice": 1.5,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      }
+    ],
+    "Allrounders": [
+      {
+        "name": "Vishal Yadav",
+        "basePrice": 2.5,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Ravindra Jadeja",
+        "basePrice": 2,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Washington Sundar",
+        "basePrice": 1.2,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Axar Patel",
+        "basePrice": 1.1,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Deepak Hooda",
+        "basePrice": 0.8,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Krunal Pandya",
+        "basePrice": 0.7,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Andre Russell",
+        "basePrice": 1.9,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      },
+      {
+        "name": "Sam Curran",
+        "basePrice": 1.4,
+        "status": "Available",
+        "team": "",
+        "soldPrice": null
+      }
+    ]
+  },
+  "gameState": {
+    "teamABudget": 100,
+    "teamBBudget": 100,
+    "teamASquad": [],
+    "teamBSquad": [],
+    "unsoldPlayers": [],
+    "currentSection": null,
+    "auctionStatus": "Not Started"
+  },
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-09-10T18:57:23.031Z",
+    "lastModified": "2025-09-10T18:57:23.031Z",
+    "description": "Cricket Auction Database - Contains all player data and auction state",
+    "instructions": {
+      "how_to_use": "1. Modify the players array with your own players. 2. Keep the same JSON structure. 3. Use this file in your project as the database.",
+      "player_fields": {
+        "name": "Player's full name (string)",
+        "basePrice": "Starting bid price in Crores (number)",
+        "status": "Available/Sold/Unsold (string)",
+        "team": "Team A/Team B or empty string (string)",
+        "soldPrice": "Final sold price or null (number/null)"
+      },
+      "categories": [
+        "Batsmen",
+        "Bowlers",
+        "Allrounders"
+      ],
+      "budget_per_team": "10.0 Crores (adjustable in gameState)"
+    }
+  }
+}
